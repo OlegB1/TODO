@@ -1,9 +1,10 @@
 var app = angular.module('myApp', []);
-app.controller('taskCtrl', function($scope) {
-    $scope.taskArr = [];
 
-    $scope.orderBy = function(x) {
-        $scope.order = x;
+app.controller('taskCtrl', function($scope) {
+    $scope.tasks = [];
+
+    $scope.orderBy = function(property) {
+        $scope.order = property;
     };
 
     $scope.addTask = function () {
@@ -11,31 +12,27 @@ app.controller('taskCtrl', function($scope) {
             return
         }
 
-        $scope.taskArr.some(function (item) {
-            $scope.isSameTask = false;
-            if(item.task.toLowerCase() === $scope.task.toLowerCase()){
-                return $scope.isSameTask = true
-            }
+        $scope.isSameTask = $scope.tasks.some(function (item) {
+            return item.task.toLowerCase() === $scope.task.toLowerCase()
         });
-
-        pushTaskToArray($scope.task);
+        if($scope.isSameTask==true){
+            return
+        }
+        $scope.tasks.push({
+            task: $scope.task,
+            number: $scope.tasks.length+1
+        })
         $scope.task = null;
     };
 
     $scope.deleteTask = function (task) {
-        var index = $scope.taskArr.indexOf(task);
-        $scope.taskArr.splice(index, 1);
-        $scope.taskArr.forEach(function(item, index){
+        var index = $scope.tasks.indexOf(task);
+        $scope.tasks.splice(index, 1);
+        $scope.tasks.forEach(function(item, index){
             item.number = index + 1;
         });
-        console.log($scope.taskArr)
+        console.log($scope.tasks)
     };
 
-    function  pushTaskToArray(task) {
-        $scope.taskArr.push({task: $scope.task});
-        $scope.taskArr.forEach(function(item){
-            item.number = $scope.taskArr.indexOf(item) + 1;
-        });
-        console.log($scope.taskArr)
-    }
+
 });

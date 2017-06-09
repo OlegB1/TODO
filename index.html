@@ -14,12 +14,12 @@
         <button class="add-task" ng-click="addTask()">Click me!</button>
     </form>
     <div class="warn" ng-show="isSameTask">This task has been existed.</div>
-    <div ng-show="taskArr.length" class="table-head">
+    <div ng-show="tasks.length" class="table-head">
             <p>Click on "№" or "Tasks" to sort the list</p>
             <div class="table-th-number" ng-click="orderBy('number')">№</div>
             <div class="table-th-task" ng-click="orderBy('task')">Tasks</div>
     </div>
-    <div ng-repeat="item in taskArr| orderBy: order">
+    <div ng-repeat="item in tasks| orderBy: order" class="repeat">
         <div class="table-tr">
             <div class="td-number">{{item.number}}</div>
             <div class="td-task">
